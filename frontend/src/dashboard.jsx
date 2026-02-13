@@ -101,7 +101,10 @@ export default function App() {
   const API = import.meta.env.VITE_API_BASE_URL;
   const [suggestions, setSuggestions] = useState([]);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const bgCanvasRef = useRef(null);
+  const sidebarTouchStartX = useRef(0);
+  const sidebarTouchCurrentX = useRef(0);
 
   const plans = [
     {
@@ -235,6 +238,7 @@ export default function App() {
       (position) => {
         const { latitude, longitude } = position.coords;
         fetchWeatherByCoords(latitude, longitude);
+        setSidebarOpen(false);
       },
       (geoError) => {
         if (geoError.code === 1) setError("Location permission denied");
@@ -413,6 +417,7 @@ export default function App() {
   function loadFavorite(name) {
     setCity(name);
     fetchWeather(name);
+    setSidebarOpen(false);
   }
 
   function windDirLabel(deg) {
@@ -524,6 +529,23 @@ export default function App() {
 
   function planIsActive(planId) {
     return Boolean(activePlans[planId] && activePlans[planId].expiresAt > Date.now());
+  }
+
+  function handleSidebarTouchStart(event) {
+    const x = event.touches?.[0]?.clientX ?? 0;
+    sidebarTouchStartX.current = x;
+    sidebarTouchCurrentX.current = x;
+  }
+
+  function handleSidebarTouchMove(event) {
+    sidebarTouchCurrentX.current = event.touches?.[0]?.clientX ?? sidebarTouchCurrentX.current;
+  }
+
+  function handleSidebarTouchEnd() {
+    const deltaX = sidebarTouchCurrentX.current - sidebarTouchStartX.current;
+    if (deltaX < -70) {
+      setSidebarOpen(false);
+    }
   }
 
   useEffect(() => {
@@ -780,7 +802,26 @@ export default function App() {
         )}
       </div>
       <canvas ref={bgCanvasRef} className="weather-canvas" aria-hidden="true" />
-      <aside className="sidebar">
+      <button
+        className="sidebar-toggle"
+        onClick={() => setSidebarOpen((prev) => !prev)}
+        aria-label="Toggle menu"
+      >
+        {sidebarOpen ? "✕" : "☰"}
+      </button>
+      {sidebarOpen && (
+        <button
+          className="sidebar-backdrop"
+          onClick={() => setSidebarOpen(false)}
+          aria-label="Close menu"
+        />
+      )}
+      <aside
+        className={`sidebar ${sidebarOpen ? "open" : ""}`}
+        onTouchStart={handleSidebarTouchStart}
+        onTouchMove={handleSidebarTouchMove}
+        onTouchEnd={handleSidebarTouchEnd}
+      >
         <div className="search-box">
           <input
             value={city}
@@ -799,6 +840,7 @@ export default function App() {
                     setCity(s.name);
                     setSuggestions([]);
                     fetchWeather(s.name);
+                    setSidebarOpen(false);
                   }}
                 >
                   <span>
@@ -968,7 +1010,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="glass humidity-card">
+            <div className="glass humidity-card metric-card">
               <div className="humidity-title">Humidity</div>
               <div className="humidity-value">
                 {data.current.main.humidity}%
@@ -982,7 +1024,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="glass feels-card">
+            <div className="glass feels-card metric-card">
               <div className="feels-title">Feels Like</div>
               <div className="feels-value">
                 {Math.round(data.current.main.feels_like)}°
@@ -996,7 +1038,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="glass visibility-card">
+            <div className="glass visibility-card metric-card">
               <div className="visibility-title">Visibility</div>
               <div className="visibility-value">
                 {Math.round(data.current.visibility / 1000)} km
@@ -1008,7 +1050,7 @@ export default function App() {
 
             {(planIsActive("Basic") || planIsActive("Pro")) && (
               <>
-                <div className="glass feature-card">
+                <div className="glass feature-card metric-card">
                   <div className="feature-title">Air Quality</div>
                   <div className="feature-big">
                     {data.current.airQuality ?? "N/A"}
@@ -1039,7 +1081,7 @@ export default function App() {
                   </div>
                 )}
 
-                <div className="glass feature-card">
+                <div className="glass feature-card metric-card">
                   <div className="feature-title">UV Index</div>
                   <div className="feature-big">
                     {data.current.uvIndex ?? "N/A"}
@@ -1053,7 +1095,7 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="glass feature-card">
+                <div className="glass feature-card metric-card">
                   <div className="feature-title">Pressure</div>
                   <div className="feature-big">
                     {data.current.main.pressure ?? "--"} hPa
@@ -1063,7 +1105,7 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="glass feature-card">
+                <div className="glass feature-card metric-card">
                   <div className="feature-title">Averages</div>
                   <div className="feature-big">+2°</div>
                   <div className="feature-sub">above average daily high</div>
