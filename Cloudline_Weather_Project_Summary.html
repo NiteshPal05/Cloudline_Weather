@@ -1,0 +1,225 @@
+<h1
+id="cloudline-weather-dashboard-mern---complete-project-summary">Cloudline
+Weather Dashboard (MERN) - Complete Project Summary</h1>
+<h2 id="project-overview">1. Project Overview</h2>
+<p>Cloudline Weather is a MERN full-stack weather dashboard with: -
+Personalized city weather search and favorites - Live location weather
+support (browser geolocation) - Interactive precipitation map (Leaflet +
+OpenWeather tiles) - Premium plans (Ads Free, Basic, Pro) with Razorpay
+checkout - User authentication (email/password + Google sign-in) -
+User-specific favorites in MongoDB - Advanced weather cards and animated
+background themes based on weather and time</p>
+<h2 id="tech-stack">2. Tech Stack</h2>
+<h3 id="frontend">Frontend</h3>
+<ul>
+<li>React (Vite)</li>
+<li>Chart.js + react-chartjs-2</li>
+<li>Leaflet + react-leaflet</li>
+<li>Tailwind CSS (configured)</li>
+<li>Custom CSS animations (aurora, stars, clouds, rain/snow canvas)</li>
+</ul>
+<h3 id="backend">Backend</h3>
+<ul>
+<li>Node.js + Express</li>
+<li>MongoDB + Mongoose</li>
+<li>Axios (external API calls)</li>
+<li>JWT authentication</li>
+<li>bcryptjs password hashing</li>
+<li>Google OAuth token verification</li>
+<li>Razorpay payment integration</li>
+</ul>
+<h3 id="apis-used">APIs Used</h3>
+<ul>
+<li>OpenWeather (Current + Forecast + Geocoding + Weather Map
+Tiles)</li>
+<li>ExchangeRate-API (USD to INR conversion for pricing)</li>
+<li>Razorpay (payment order and verification)</li>
+<li>Google Identity (OAuth login)</li>
+</ul>
+<h2 id="core-features-implemented">3. Core Features Implemented</h2>
+<h3 id="weather-features">Weather Features</h3>
+<ul>
+<li>City search weather (<code>/api/weather?city=...</code>)</li>
+<li>Hourly and daily forecast cards</li>
+<li>Dynamic weather icons (amCharts icon pack)</li>
+<li>Weather-dependent animated background</li>
+<li>Live location weather
+(<code>/api/weather?lat=...&amp;lon=...</code>)</li>
+</ul>
+<h3 id="user-features">User Features</h3>
+<ul>
+<li>Email/password signup and login</li>
+<li>Google login</li>
+<li>Profile menu with active plan status and logout</li>
+<li>User-specific favorites (save/load/delete)</li>
+</ul>
+<h3 id="premium-payments">Premium &amp; Payments</h3>
+<ul>
+<li>Monthly and Annual plan toggle</li>
+<li>Plan activation with expiry tracking</li>
+<li>Pro upgrade discount if Basic is already active</li>
+<li>Pro auto-includes Basic benefits</li>
+<li>Razorpay order creation + payment signature verification</li>
+</ul>
+<h3 id="pro-only-dataui">Pro-only Data/UI</h3>
+<ul>
+<li>Precipitation summary with mm + POP</li>
+<li>Real precipitation map (Leaflet + OpenWeather tile overlay)</li>
+<li>Moon information cards</li>
+</ul>
+<h2 id="database-models">4. Database Models</h2>
+<h3 id="user-model">User Model</h3>
+<ul>
+<li><code>email</code> (unique)</li>
+<li><code>passwordHash</code></li>
+</ul>
+<h3 id="favorite-model">Favorite Model</h3>
+<ul>
+<li><code>city</code></li>
+<li><code>cityNormalized</code></li>
+<li><code>user</code> (ObjectId reference)</li>
+<li>Unique compound index: <code>(user, cityNormalized)</code></li>
+</ul>
+<h2 id="final-frontend-dependencies">5. Final Frontend Dependencies</h2>
+<p>From <code>frontend/package.json</code>: - chart.js:
+<code>^4.5.1</code> - leaflet: <code>^1.9.4</code> - react:
+<code>^19.2.0</code> - react-chartjs-2: <code>^5.3.1</code> - react-dom:
+<code>^19.2.0</code> - react-leaflet: <code>^5.0.0</code></p>
+<p>Dev dependencies: - <span class="citation"
+data-cites="vitejs/plugin-react">@vitejs/plugin-react</span>:
+<code>^5.1.1</code> - vite: <code>^7.3.1</code> - tailwindcss:
+<code>^3.4.17</code> - postcss: <code>^8.5.6</code> - autoprefixer:
+<code>^10.4.24</code> - eslint + related plugins</p>
+<h2 id="final-backend-dependencies">6. Final Backend Dependencies</h2>
+<p>From <code>backend/package.json</code>: - axios: <code>^1.13.5</code>
+- bcryptjs: <code>^3.0.3</code> - cors: <code>^2.8.6</code> - dotenv:
+<code>^17.2.4</code> - express: <code>^5.2.1</code> -
+google-auth-library: <code>^10.5.0</code> - jsonwebtoken:
+<code>^9.0.3</code> - mongoose: <code>^9.2.0</code> - razorpay:
+<code>^2.9.6</code></p>
+<h2 id="important-environment-variables">7. Important Environment
+Variables</h2>
+<h3 id="backend-backend.env">Backend (<code>backend/.env</code>)</h3>
+<ul>
+<li><code>OPENWEATHER_API_KEY</code></li>
+<li><code>MONGODB_URI</code></li>
+<li><code>JWT_SECRET</code></li>
+<li><code>RAZORPAY_KEY_ID</code></li>
+<li><code>RAZORPAY_KEY_SECRET</code></li>
+<li><code>GOOGLE_CLIENT_ID</code></li>
+<li><code>EXCHANGE_RATE_API_KEY</code></li>
+</ul>
+<h3 id="frontend-frontend.env">Frontend
+(<code>frontend/.env</code>)</h3>
+<ul>
+<li><code>VITE_API_BASE_URL</code></li>
+<li><code>VITE_RAZORPAY_KEY_ID</code></li>
+<li><code>VITE_GOOGLE_CLIENT_ID</code></li>
+</ul>
+<h2 id="key-terminal-commands-used-during-development">8. Key Terminal
+Commands Used During Development</h2>
+<h3 id="project-setup">Project setup</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> init <span class="at">-y</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install express dotenv axios cors mongoose razorpay jsonwebtoken bcryptjs google-auth-library</span></code></pre></div>
+<h3 id="run-backend">Run backend</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> backend</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> nodemon server.js</span></code></pre></div>
+<h3 id="run-frontend">Run frontend</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> frontend</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code></pre></div>
+<h3 id="build-frontend">Build frontend</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run build</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run preview</span></code></pre></div>
+<h3 id="tailwind-setup">Tailwind setup</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-D</span> tailwindcss@3.4.17 postcss autoprefixer</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tailwindcss init <span class="at">-p</span></span></code></pre></div>
+<h3 id="gitgithub">Git/GitHub</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Initial commit&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin <span class="op">&lt;</span>repo-url<span class="op">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div>
+<h3 id="remove-dist-from-repo-if-needed">Remove dist from repo (if
+needed)</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">-r</span> <span class="at">--cached</span> frontend/dist</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;frontend/dist&quot;</span> <span class="op">&gt;&gt;</span> .gitignore</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .gitignore</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Remove dist from repository and ignore it&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div>
+<h2 id="deployment-summary">9. Deployment Summary</h2>
+<h3 id="frontend-deployment-netlify">Frontend Deployment (Netlify)</h3>
+<ul>
+<li>Site URL: <code>https://cloudlineweather.netlify.app/</code></li>
+<li>Build command: <code>npm run build</code></li>
+<li>Publish directory: <code>dist</code></li>
+<li>Root directory: <code>frontend</code></li>
+</ul>
+<h3 id="backend-deployment-render">Backend Deployment (Render)</h3>
+<ul>
+<li>Start command: <code>node server.js</code> (or
+<code>npm start</code> if script provided)</li>
+<li>Build command: <code>npm install</code></li>
+<li>Root directory: <code>backend</code></li>
+</ul>
+<h3 id="deployment-checklist">Deployment checklist</h3>
+<ol type="1">
+<li>Deploy backend first</li>
+<li>Set backend env vars in Render</li>
+<li>Deploy frontend with Netlify env vars</li>
+<li>Update backend CORS allowlist for Netlify domain</li>
+<li>Configure Google OAuth authorized origin</li>
+<li>Configure Razorpay production/test keys and allowed domains</li>
+<li>Verify full production flow</li>
+</ol>
+<h2 id="common-issues-faced-and-resolutions">10. Common Issues Faced and
+Resolutions</h2>
+<ul>
+<li>OpenWeather <code>401 invalid key</code> -&gt; waited for key
+activation, corrected endpoint usage</li>
+<li>One Call 3.0 restriction errors -&gt; used supported free endpoints
+where needed</li>
+<li>Razorpay <code>key_id mandatory</code> -&gt; missing env vars
+fixed</li>
+<li><code>cityName.trim is not a function</code> -&gt; corrected
+event/string handling</li>
+<li>Duplicate city across users -&gt; migrated to user-scoped favorites
+index</li>
+<li>Render <code>ERR_MODULE_NOT_FOUND</code> -&gt; filename import case
+mismatch fixed</li>
+<li>Atlas connection/auth errors -&gt; IP allowlist + DB user/password +
+URI format corrected</li>
+<li><code>Tooltip already declared</code> -&gt; aliased Leaflet Tooltip
+import</li>
+</ul>
+<h2 id="final-architecture-high-level">11. Final Architecture
+(High-level)</h2>
+<ul>
+<li>Frontend (React/Vite) consumes backend REST APIs</li>
+<li>Backend (Express) integrates OpenWeather, ExchangeRate-API,
+Razorpay</li>
+<li>MongoDB Atlas stores users and favorites</li>
+<li>JWT secures user-scoped endpoints</li>
+<li>Premium activation state stored per-user in frontend local storage
+and UI logic</li>
+</ul>
+<h2 id="suggested-next-improvements">12. Suggested Next
+Improvements</h2>
+<ul>
+<li>Move premium activation persistence fully to backend DB (single
+source of truth)</li>
+<li>Add refresh token/session strategy</li>
+<li>Add retry and caching layer for external weather APIs</li>
+<li>Add test coverage (unit + integration)</li>
+<li>Add CI/CD pipeline for lint/build/deploy checks</li>
+</ul>
+<hr />
+<p>Prepared for: Cloudline Weather project</p>
