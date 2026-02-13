@@ -378,6 +378,14 @@ body[data-temp="cold"] .weather-sun {
   backdrop-filter: blur(16px);
 }
 
+.sidebar-toggle {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
 .search-box {
   display: flex;
   gap: 8px;
@@ -870,11 +878,16 @@ body[data-temp="cold"] .weather-sun {
 
 .pricing {
   grid-column: span 4;
+  order: 999;
+  margin-top: 10px;
+  align-self: stretch;
 }
 .pricing-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .toggle {
@@ -1068,6 +1081,12 @@ body[data-temp="cold"] .weather-sun {
   color: #c7d2e6;
   font-size: 14px;
   line-height: 1.35;
+}
+
+.metric-card {
+  min-height: 180px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 28px rgba(0, 0, 0, 0.28);
 }
 .aq-bar {
   position: relative;
@@ -1279,11 +1298,53 @@ body[data-temp="cold"] .weather-sun {
     overflow: auto;
   }
   .app {
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 1fr;
     height: auto;
+  }
+  .sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(20, 28, 52, 0.88);
+    color: #e8f2ff;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 1300;
+    backdrop-filter: blur(10px);
+  }
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 8, 18, 0.46);
+    border: 0;
+    z-index: 1190;
+  }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(82vw, 330px);
+    height: 100vh;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    z-index: 1250;
+    transform: translateX(-105%);
+    transition: transform 260ms ease;
+    overflow-y: auto;
+  }
+  .sidebar.open {
+    transform: translateX(0);
   }
   .main {
     padding: 24px;
+    padding-top: 64px;
     overflow: visible;
   }
   .grid {
@@ -1310,8 +1371,7 @@ body[data-temp="cold"] .weather-sun {
     height: auto;
   }
   .sidebar {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
     padding: 16px;
   }
   .main {
@@ -1374,7 +1434,8 @@ body[data-temp="cold"] .weather-sun {
     flex-direction: column;
   }
   .search-box button,
-  .save-btn {
+  .save-btn,
+  .location-btn {
     width: 100%;
   }
 }
