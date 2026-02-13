@@ -26,7 +26,30 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const app = express();
 const PORT = 5001;
 
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://cloudlineweather.netlify.app",
+];
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+
+      const isAllowed =
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".netlify.app"); // optional: allow Netlify preview URLs
+
+      if (isAllowed) return callback(null, true);
+      return callback(new Error("CORS blocked: origin not allowed"));
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 
 
