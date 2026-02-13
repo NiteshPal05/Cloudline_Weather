@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import axios from "axios";
 import mongoose from "mongoose";
-import Favorite from "./models/favorite.js";
+import Favorite from "./models/Favorite.js";
 import User from "./models/User.js";
 import Razorpay from "razorpay";
 import crypto from "crypto";
