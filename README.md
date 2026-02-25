@@ -47,20 +47,20 @@ weather_dashboard/
 
 ### Backend (`backend/.env`)
 ```env
-OPENWEATHER_API_KEY=your_openweather_key
-MONGODB_URI=your_mongodb_atlas_uri
-JWT_SECRET=your_jwt_secret
-RAZORPAY_KEY_ID=your_razorpay_key_id
-RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-GOOGLE_CLIENT_ID=your_google_client_id
-EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key
+OPENWEATHER_API_KEY=my_openweather_key
+MONGODB_URI=my_mongodb_atlas_uri
+JWT_SECRET=my_jwt_secret
+RAZORPAY_KEY_ID=my_razorpay_key_id
+RAZORPAY_KEY_SECRET=my_razorpay_key_secret
+GOOGLE_CLIENT_ID=my_google_client_id
+EXCHANGE_RATE_API_KEY=my_exchange_rate_api_key
 ```
 
 ### Frontend (`frontend/.env`)
 ```env
 VITE_API_BASE_URL=http://localhost:5001
-VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
-VITE_GOOGLE_CLIENT_ID=your_google_client_id
+VITE_RAZORPAY_KEY_ID=my_razorpay_key_id
+VITE_GOOGLE_CLIENT_ID=my_google_client_id
 ```
 
 ## Local Setup
