@@ -98,7 +98,7 @@ export default function App() {
   const [showLogin, setShowLogin] = useState(false);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
-  const API = import.meta.env.VITE_API_BASE_URL;
+  const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
   const [suggestions, setSuggestions] = useState([]);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);

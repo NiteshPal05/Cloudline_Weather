@@ -63,6 +63,10 @@ app.use(
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.status(200).send("Cloudline Weather backend is running. Use /api/health for status.");
+});
+
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
