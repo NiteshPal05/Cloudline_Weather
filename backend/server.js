@@ -15,16 +15,27 @@ import { OAuth2Client } from "google-auth-library";
 
 
 
-dotenv.config();
+dotenv.config({ path: new URL("./.env", import.meta.url) });
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+let razorpay = null;
+
+function getRazorpayClient() {
+  if (razorpay) return razorpay;
+  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    return null;
+  }
+
+  razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+  });
+
+  return razorpay;
+}
 
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -51,6 +62,15 @@ app.use(
 );
 
 app.use(express.json());
+
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "ok",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    mongoState: mongoose.connection.readyState,
+  });
+});
 
 
 async function cleanupLegacyFavoriteIndexes() {
@@ -366,6 +386,11 @@ app.post("/api/razorpay/order", authMiddleware, async (req, res) => {
       return res.status(400).json({ error: "amountUSD required" });
     }
 
+    const razorpayClient = getRazorpayClient();
+    if (!razorpayClient) {
+      return res.status(503).json({ error: "Razorpay is not configured on this server" });
+    }
+
     const rate = await getUsdToInrRate();
     const amountINR = Math.round(amountUSD * rate);
 
@@ -375,7 +400,7 @@ app.post("/api/razorpay/order", authMiddleware, async (req, res) => {
       receipt: "receipt_" + Date.now(),
     };
 
-    const order = await razorpay.orders.create(options);
+    const order = await razorpayClient.orders.create(options);
     res.json({ order, amountINR, rate });
   } catch (err) {
     console.error("Rate/Order error:", err.response?.data || err.message);
@@ -386,6 +411,10 @@ app.post("/api/razorpay/order", authMiddleware, async (req, res) => {
 // ===== Razorpay: verify payment =====
 app.post("/api/razorpay/verify", async (req, res) => {
   try {
+    if (!process.env.RAZORPAY_KEY_SECRET) {
+      return res.status(503).json({ error: "Razorpay is not configured on this server" });
+    }
+
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
