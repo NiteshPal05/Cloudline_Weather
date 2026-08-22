@@ -1,1 +1,4 @@
 frontend/dist
+backend/.env
+.DS_Store
+key & summary/
